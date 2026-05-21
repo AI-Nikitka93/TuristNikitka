@@ -61,13 +61,16 @@ const initLiveMap = () => {
     const map = L.map(mapEl, {
         scrollWheelZoom: false,
         zoomControl: true,
-        worldCopyJump: true
+        worldCopyJump: true,
+        attributionControl: false
     }).setView([30, 25], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '&copy; OpenStreetMap contributors'
+        maxZoom: 18
     }).addTo(map);
+    L.control.attribution({ prefix: false })
+        .addAttribution('&copy; OpenStreetMap')
+        .addTo(map);
 
     const layers = L.layerGroup().addTo(map);
     mapEl.dataset.mapReady = 'true';

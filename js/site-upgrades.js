@@ -217,7 +217,6 @@
     };
 
     const formatPrice = (value) => `${Number(value).toLocaleString('ru-RU')} ₽`;
-    const matcherOrigin = { name: 'Москва', lat: 55.7558, lng: 37.6173 };
     let matcherMapApi = { selectRoute() {} };
     const routeCountryLabel = (tour) => tour.country || tour.destination;
     const routePlaceLabel = (tour) => tour.focusName || tour.destination;
@@ -663,13 +662,15 @@
         const map = window.L.map(mapEl, {
             scrollWheelZoom: false,
             zoomControl: true,
-            attributionControl: true
+            attributionControl: false
         }).setView([30, 25], 2);
 
         window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; OpenStreetMap contributors'
+            maxZoom: 18
         }).addTo(map);
+        window.L.control.attribution({ prefix: false })
+            .addAttribution('&copy; OpenStreetMap')
+            .addTo(map);
 
         const layers = window.L.layerGroup().addTo(map);
         mapEl.dataset.mapReady = 'true';
@@ -696,16 +697,6 @@
                     opacity: 0.94,
                     lineCap: 'round',
                     lineJoin: 'round'
-                }).addTo(layers);
-
-                window.L.polyline([
-                    [matcherOrigin.lat, matcherOrigin.lng],
-                    [tour.coordinates[0].lat, tour.coordinates[0].lng]
-                ], {
-                    color: '#00f2fe',
-                    weight: 2,
-                    opacity: 0.56,
-                    dashArray: '7 9'
                 }).addTo(layers);
 
                 tour.coordinates.forEach((point, index) => {

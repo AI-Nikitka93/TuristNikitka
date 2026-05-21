@@ -1853,7 +1853,7 @@ body.modal-open .ai-chat-window {
 
 .route-country-strip {
     display: grid;
-    gap: 10px;
+    gap: 12px;
     padding: 14px;
     border-radius: var(--radius-lg);
     background: rgba(255, 255, 255, 0.035);
@@ -1875,21 +1875,22 @@ body.modal-open .ai-chat-window {
 }
 
 .route-country-routes {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(242, 169, 59, 0.55) rgba(255, 255, 255, 0.06);
+    overflow: visible;
+    padding-bottom: 0;
 }
 
 .route-country-button {
-    flex: 0 0 126px;
-    min-height: 58px;
+    min-width: 0;
+    min-height: 62px;
     padding: 10px 12px;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    background: rgba(7, 11, 19, 0.56);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+        rgba(7, 11, 19, 0.56);
     color: var(--color-text-light);
     cursor: pointer;
     text-align: left;
@@ -1900,8 +1901,15 @@ body.modal-open .ai-chat-window {
 .route-country-button:focus-visible,
 .route-country-button.active {
     border-color: rgba(242, 169, 59, 0.55);
-    background: rgba(242, 169, 59, 0.10);
+    background:
+        linear-gradient(135deg, rgba(242, 169, 59, 0.18), rgba(0, 242, 254, 0.04)),
+        rgba(242, 169, 59, 0.08);
     transform: translateY(-2px);
+}
+
+.route-country-button:focus-visible {
+    outline: 2px solid rgba(242, 169, 59, 0.55);
+    outline-offset: 2px;
 }
 
 .route-country-button small,
