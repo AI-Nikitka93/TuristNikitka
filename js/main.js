@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <h4>Nikitka AI Concierge</h4>
                         <div class="ai-chat-status">
                             <div class="ai-chat-status-dot"></div>
-                            <div class="ai-chat-status-text">локально, без платного API</div>
+                            <div class="ai-chat-status-text" id="aiChatStatusText">ожидает API-ключ</div>
                         </div>
                     </div>
                 </div>
@@ -420,6 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatSend = document.getElementById('aiChatSend');
         const chatClose = document.getElementById('aiChatClose');
         const chatChips = document.getElementById('aiChatChips');
+        const chatStatus = document.getElementById('aiChatStatusText');
 
         badge.addEventListener('click', () => {
             windowDiv.classList.add('active');
@@ -435,13 +436,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         chatClose.addEventListener('click', closeChat);
 
-        const addMessage = (text, sender, btnData = null) => {
+        const addMessage = (text, sender, btnData = null, allowHtml = false) => {
             const msg = document.createElement('div');
             msg.className = `ai-chat-message ${sender}`;
             if (sender === 'user') {
                 msg.textContent = text;
-            } else {
+            } else if (allowHtml) {
                 msg.innerHTML = text;
+            } else {
+                msg.textContent = text;
             }
             if (btnData) {
                 const btn = document.createElement('a');
@@ -479,8 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typing) typing.remove();
         };
 
-        const handleBotResponse = (userMsg) => {
-            showTyping();
+        const getLocalBotResponse = (userMsg) => {
             const lower = userMsg.toLowerCase();
             let response = "По текущему каталогу могу предложить сравнить маршруты по бюджету, темпу и ключевым точкам. Для полного подбора откройте каталог туров.";
             let btnData = { text: "Открыть каталог туров", url: "tours.html" };
@@ -502,10 +504,68 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnData = { text: "Оставить пожелания", url: "tours.html" };
             }
 
-            setTimeout(() => {
+            return { response, btnData };
+        };
+
+        const getChatHistory = () => {
+            return Array.from(chatBody.querySelectorAll('.ai-chat-message'))
+                .slice(-8)
+                .map((item) => ({
+                    role: item.classList.contains('user') ? 'user' : 'assistant',
+                    content: item.textContent.replace(/\s+/g, ' ').trim()
+                }))
+                .filter((item) => item.content);
+        };
+
+        const setChatLoading = (isLoading) => {
+            chatInput.disabled = isLoading;
+            chatSend.disabled = isLoading;
+            if (isLoading) {
+                chatSend.setAttribute('aria-busy', 'true');
+            } else {
+                chatSend.removeAttribute('aria-busy');
+                chatInput.focus();
+            }
+        };
+
+        const tryRemoteAI = async (userMsg) => {
+            const response = await fetch('/api/ai-chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: userMsg,
+                    history: getChatHistory()
+                })
+            });
+
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || !payload.ok || !payload.reply) {
+                throw new Error(payload.error || 'AI endpoint unavailable');
+            }
+            return payload;
+        };
+
+        const handleBotResponse = async (userMsg) => {
+            showTyping();
+            setChatLoading(true);
+
+            try {
+                const payload = await tryRemoteAI(userMsg);
                 removeTyping();
-                addMessage(response, 'bot', btnData);
-            }, 1000);
+                if (chatStatus) {
+                    chatStatus.textContent = `${payload.providerLabel || payload.provider}: ${payload.model}`;
+                }
+                addMessage(payload.reply, 'bot', { text: "Открыть каталог", url: "tours.html" });
+            } catch (error) {
+                const { response, btnData } = getLocalBotResponse(userMsg);
+                setTimeout(() => {
+                    removeTyping();
+                    if (chatStatus) chatStatus.textContent = 'локальный fallback';
+                    addMessage(response, 'bot', btnData, true);
+                }, 450);
+            } finally {
+                setChatLoading(false);
+            }
         };
 
         const sendMessage = () => {
