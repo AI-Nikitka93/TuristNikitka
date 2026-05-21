@@ -2633,9 +2633,16 @@ body.modal-open .ai-chat-window {
 
 .osm-office-map {
     position: absolute;
-    inset: 70px 24px 24px 24px;
+    top: 70px;
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
+    width: calc(100% - 48px);
+    height: calc(100% - 94px);
+    display: block;
     border: 0;
     border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.04);
     filter: saturate(0.9) contrast(1.05);
 }
 
@@ -2657,6 +2664,25 @@ body.modal-open .ai-chat-window {
     display: block;
     color: var(--color-text-light);
     margin-bottom: 5px;
+}
+
+@media (max-width: 760px) {
+    .osm-office-map {
+        top: 64px;
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: calc(100% - 80px);
+    }
+
+    .map-section .map-caption {
+        right: 16px;
+        left: 16px;
+        bottom: 18px;
+        max-width: none;
+        padding: 14px;
+    }
 }
 
 @media (max-width: 1100px) {

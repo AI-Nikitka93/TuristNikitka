@@ -99,7 +99,7 @@
             margin-bottom: 30px;
         }
 
-        /* Interactive SVG Map Mockup */
+        /* Office OpenStreetMap block */
         .map-section {
             margin-top: 80px;
             border-radius: var(--radius-xl);
@@ -107,10 +107,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             background: #090e17;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: clamp(460px, 42vw, 560px);
+            min-height: 460px;
             box-shadow: var(--shadow-premium);
         }
 
@@ -121,6 +119,19 @@
                 radial-gradient(rgba(242, 169, 59, 0.15) 1px, transparent 0),
                 radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
             background-size: 40px 40px, 20px 20px;
+        }
+
+        .map-section-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 0;
         }
 
         .map-marker {
@@ -160,6 +171,19 @@
 
         .map-marker:hover .map-marker-label {
             opacity: 1;
+        }
+
+        @media (max-width: 760px) {
+            .map-section {
+                height: 520px;
+                margin-top: 56px;
+            }
+
+            .map-section-title {
+                left: 16px;
+                right: 16px;
+                font-size: 0.78rem;
+            }
         }
 
         .pulse-effect {
@@ -321,7 +345,7 @@
                 <!-- Map Section -->
                 <div class="map-section">
                     <div class="map-bg-grid"></div>
-                    <span style="position: absolute; top: 20px; left: 20px; font-family: var(--font-heading); font-size: 0.85rem; font-weight: 700; color: var(--color-accent-gold); text-transform: uppercase; letter-spacing: 0.1em; z-index: 10;">Офис и маршрутная точка</span>
+                    <span class="map-section-title">Офис и маршрутная точка</span>
                     <iframe
                         class="osm-office-map"
                         title="Карта офиса Nikitka AI Travel в Москва-Сити"
