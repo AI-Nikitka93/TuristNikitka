@@ -315,16 +315,16 @@
             </div>
         </section>
 
-        <!-- 3D Route Atlas & Live Map -->
+        <!-- 3D Route Atlas -->
         <section class="section route-atlas-section" id="routeAtlas" aria-labelledby="routeAtlasTitle">
             <canvas id="routeGlobeCanvas" class="route-globe-canvas" aria-label="3D глобус маршрутов"></canvas>
             <div class="route-atlas-shade" aria-hidden="true"></div>
             <div class="container route-atlas-inner">
                 <div class="route-atlas-copy">
-                    <span class="section-subtitle">3D + живая карта</span>
+                    <span class="section-subtitle">3D-атлас маршрутов</span>
                     <h2 class="section-title" id="routeAtlasTitle">Маршрутный атлас агентства</h2>
                     <p id="routeAtlasDescription">
-                        Вращайте 3D-глобус на текстуре NASA Blue Marble, выбирайте направление и смотрите реальные точки маршрута на OpenStreetMap.
+                        Вращайте 3D-глобус на текстуре NASA Blue Marble, выбирайте направление и смотрите, как маршрут ложится на глобальную сцену.
                     </p>
 
                     <div class="route-atlas-metrics" aria-label="Сводка маршрута">
@@ -336,16 +336,24 @@
                     <div class="route-atlas-controls" id="routeAtlasControls" aria-label="Выбор маршрута"></div>
                 </div>
 
-                <div class="route-map-live-shell">
-                    <div class="route-map-live-head">
+                <div class="route-atlas-panel">
+                    <div class="route-atlas-panel-head">
                         <div>
-                            <span class="section-subtitle">OpenStreetMap</span>
-                            <h3 id="routeMapLiveTitle">Карта маршрута</h3>
+                            <span class="section-subtitle" id="routeAtlasPanelCountry">Индонезия</span>
+                            <h3 id="routeAtlasPanelTitle">Сценарий на глобусе</h3>
                         </div>
-                        <span class="route-map-live-pill">без API-ключа</span>
+                        <span class="route-map-live-pill">3D</span>
                     </div>
-                    <div class="route-leaflet-map" id="routeLeafletMap" aria-label="Живая карта выбранного маршрута"></div>
-                    <div class="route-map-live-legend" id="routeMapLiveLegend"></div>
+                    <div class="route-atlas-flight-card">
+                        <span>Старт</span>
+                        <strong id="routeAtlasFlight">Минск -> Бали</strong>
+                        <small>Перелет из Минска, затем последовательность точек по дням.</small>
+                    </div>
+                    <ol class="route-atlas-stop-list" id="routeAtlasStopList" aria-label="Точки маршрута"></ol>
+                    <div class="route-atlas-panel-footer">
+                        <span>Сценарий готов для заявки менеджеру: страна, бюджет, темп и точки уже собраны.</span>
+                        <a href="tours.html" class="btn btn-primary" id="routeAtlasBookingLink">Оставить заявку</a>
+                    </div>
                 </div>
             </div>
         </section>

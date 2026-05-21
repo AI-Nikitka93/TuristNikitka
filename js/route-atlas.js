@@ -33,7 +33,11 @@ const updateCopy = (route) => {
     const days = document.getElementById('routeAtlasDays');
     const stops = document.getElementById('routeAtlasStops');
     const budget = document.getElementById('routeAtlasBudget');
-    const liveTitle = document.getElementById('routeMapLiveTitle');
+    const panelCountry = document.getElementById('routeAtlasPanelCountry');
+    const panelTitle = document.getElementById('routeAtlasPanelTitle');
+    const flight = document.getElementById('routeAtlasFlight');
+    const stopList = document.getElementById('routeAtlasStopList');
+    const bookingLink = document.getElementById('routeAtlasBookingLink');
 
     if (title) title.textContent = `${countryLabel(route)}: ${route.title}`;
     if (description) {
@@ -42,84 +46,25 @@ const updateCopy = (route) => {
     if (days) days.textContent = route.durationDays;
     if (stops) stops.textContent = route.coordinates.length;
     if (budget) budget.textContent = fmtPrice(route.price);
-    if (liveTitle) liveTitle.textContent = `Карта: ${countryLabel(route)} · ${placeLabel(route)}`;
+    if (panelCountry) panelCountry.textContent = `${countryLabel(route)} · ${placeLabel(route)}`;
+    if (panelTitle) panelTitle.textContent = `${route.title}`;
+    if (flight) flight.textContent = `${origin.name} -> ${placeLabel(route)}`;
+    if (bookingLink) bookingLink.href = `tours.html?book=${route.id}`;
+    if (stopList) {
+        stopList.innerHTML = route.coordinates.map((point, index) => `
+            <li>
+                <span>${index + 1}</span>
+                <div>
+                    <strong>${point.name}</strong>
+                    <small>${point.note || route.bestFor}</small>
+                </div>
+            </li>
+        `).join('');
+    }
 
     document.querySelectorAll('[data-atlas-route]').forEach((button) => {
         button.classList.toggle('active', button.getAttribute('data-atlas-route') === route.id);
     });
-};
-
-const initLiveMap = () => {
-    const mapEl = document.getElementById('routeLeafletMap');
-    const legend = document.getElementById('routeMapLiveLegend');
-    if (!mapEl) return { selectRoute() {} };
-
-    if (!window.L) {
-        mapEl.innerHTML = '<div class="route-map-fallback">Карта не загрузилась. Проверьте подключение к CDN Leaflet/OpenStreetMap.</div>';
-        return { selectRoute() {} };
-    }
-
-    const map = L.map(mapEl, {
-        scrollWheelZoom: false,
-        zoomControl: true,
-        worldCopyJump: true,
-        attributionControl: false
-    }).setView([30, 25], 2);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18
-    }).addTo(map);
-    L.control.attribution({ prefix: false })
-        .addAttribution('&copy; OpenStreetMap')
-        .addTo(map);
-
-    const layers = L.layerGroup().addTo(map);
-    mapEl.dataset.mapReady = 'true';
-
-    const makeMarker = (index) => L.divIcon({
-        className: 'route-live-marker',
-        html: `<span>${index + 1}</span>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
-    });
-
-    const selectRoute = (route) => {
-        layers.clearLayers();
-
-        const latLngs = route.coordinates.map((point) => [point.lat, point.lng]);
-        L.polyline(latLngs, {
-            color: '#f2a93b',
-            weight: 4,
-            opacity: 0.92,
-            lineCap: 'round',
-            lineJoin: 'round'
-        }).addTo(layers);
-
-        route.coordinates.forEach((point, index) => {
-            L.marker([point.lat, point.lng], { icon: makeMarker(index) })
-                .bindTooltip(point.name, { direction: 'top', offset: [0, -12] })
-                .addTo(layers);
-        });
-
-        map.fitBounds(L.latLngBounds(latLngs), {
-            padding: [34, 34],
-            maxZoom: 10
-        });
-
-        if (legend) {
-            legend.innerHTML = `
-                <div class="route-map-country-pill">${countryLabel(route)}</div>
-                <ol>
-                    ${route.coordinates.map((point) => `<li>${point.name}</li>`).join('')}
-                </ol>
-                <a href="tours.html?book=${route.id}" class="btn btn-primary">Оставить заявку</a>
-            `;
-        }
-
-        window.setTimeout(() => map.invalidateSize(), 80);
-    };
-
-    return { selectRoute };
 };
 
 const latLngToVector3 = (point, radius = 2.2) => {
@@ -221,7 +166,7 @@ const initGlobe = () => {
             selectRoute(route) {
                 const description = document.getElementById('routeAtlasDescription');
                 if (description) {
-                    description.textContent = `${route.bestFor}. 3D-глобус отключен в этом браузере, но OpenStreetMap-карта раскрывает реальные точки маршрута.`;
+                    description.textContent = `${route.bestFor}. 3D-глобус отключен в этом браузере, но сценарий справа раскрывает точки маршрута.`;
                 }
             }
         };
@@ -449,13 +394,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const routes = getRoutes();
     if (!atlas || routes.length === 0) return;
 
-    const mapApi = initLiveMap();
     const globeApi = initGlobe();
 
     const selectRoute = (routeId) => {
         const route = routes.find((item) => item.id === routeId) || routes[0];
         updateCopy(route);
-        mapApi.selectRoute(route);
         globeApi.selectRoute(route);
         window.dispatchEvent(new CustomEvent('nikitka:atlas-route-selected', { detail: { tourId: route.id } }));
     };

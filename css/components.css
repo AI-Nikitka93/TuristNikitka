@@ -2467,7 +2467,7 @@ body.modal-open .ai-chat-window {
 }
 
 /* ==========================================================================
-   11. 3D ROUTE ATLAS & LIVE OPENSTREETMAP
+   11. 3D ROUTE ATLAS
    ========================================================================== */
 .route-atlas-section {
     position: relative;
@@ -2602,20 +2602,22 @@ body.modal-open .ai-chat-window {
     font-size: 0.75rem;
 }
 
-.route-map-live-shell {
+.route-atlas-panel {
     min-height: auto;
     width: 100%;
-    max-width: 540px;
+    max-width: 520px;
     justify-self: end;
-    padding: 22px;
+    padding: 26px;
     border-radius: var(--radius-xl);
     border: 1px solid rgba(255, 255, 255, 0.10);
-    background: rgba(7, 11, 19, 0.78);
+    background:
+        linear-gradient(145deg, rgba(15, 22, 34, 0.92), rgba(7, 11, 19, 0.78)),
+        radial-gradient(circle at 100% 0%, rgba(0, 242, 254, 0.12), transparent 18rem);
     box-shadow: var(--shadow-premium);
     backdrop-filter: blur(18px);
 }
 
-.route-map-live-head {
+.route-atlas-panel-head {
     display: flex;
     justify-content: space-between;
     gap: 18px;
@@ -2623,7 +2625,7 @@ body.modal-open .ai-chat-window {
     margin-bottom: 18px;
 }
 
-.route-map-live-head h3 {
+.route-atlas-panel-head h3 {
     font-size: 1.45rem;
 }
 
@@ -2640,38 +2642,52 @@ body.modal-open .ai-chat-window {
     white-space: nowrap;
 }
 
-.route-leaflet-map {
-    height: 320px;
+.route-atlas-flight-card {
+    padding: 18px;
     border-radius: var(--radius-lg);
-    overflow: hidden;
-    background: #08101d;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    margin-bottom: 18px;
+}
+
+.route-atlas-flight-card span,
+.route-atlas-flight-card small {
+    display: block;
+    color: var(--color-text-muted-light);
+    font-size: 0.82rem;
+}
+
+.route-atlas-flight-card strong {
+    display: block;
+    margin: 6px 0;
+    color: var(--color-text-light);
+    font-family: var(--font-heading);
+    font-size: 1.42rem;
+    line-height: 1.15;
+}
+
+.route-atlas-stop-list {
+    display: grid;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.route-atlas-stop-list li {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.035);
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.route-leaflet-map .leaflet-tile {
-    filter: saturate(0.75) contrast(1.05) brightness(0.68);
-}
-
-.route-leaflet-map .leaflet-control-attribution,
-.route-leaflet-map .leaflet-control-zoom a {
-    background: rgba(7, 11, 19, 0.86);
-    color: var(--color-text-muted-light);
-    border-color: rgba(255, 255, 255, 0.10);
-}
-
-.route-leaflet-map .leaflet-control-zoom a:hover {
-    background: rgba(242, 169, 59, 0.16);
-    color: var(--color-accent-gold);
-}
-
-.route-live-marker {
-    border: 0;
-    background: transparent;
-}
-
-.route-live-marker span {
-    width: 32px;
-    height: 32px;
+.route-atlas-stop-list li > span {
+    width: 34px;
+    height: 34px;
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;
@@ -2679,57 +2695,40 @@ body.modal-open .ai-chat-window {
     background: var(--color-accent-gold);
     color: #070b13;
     font-family: var(--font-heading);
-    font-weight: 800;
-    border: 3px solid rgba(7, 11, 19, 0.92);
-    box-shadow: 0 0 0 8px rgba(242, 169, 59, 0.16), 0 12px 22px rgba(0, 0, 0, 0.35);
+    font-weight: 900;
+    box-shadow: 0 0 0 7px rgba(242, 169, 59, 0.14);
 }
 
-.route-map-live-legend {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 16px;
-    align-items: center;
-    margin-top: 18px;
+.route-atlas-stop-list strong,
+.route-atlas-stop-list small {
+    display: block;
 }
 
-.route-map-country-pill {
-    display: inline-flex;
-    align-items: center;
-    min-height: 36px;
-    padding: 8px 12px;
-    border-radius: var(--radius-full);
-    background: rgba(242, 169, 59, 0.10);
-    border: 1px solid rgba(242, 169, 59, 0.25);
-    color: var(--color-accent-gold);
+.route-atlas-stop-list strong {
+    color: var(--color-text-light);
     font-family: var(--font-heading);
-    font-weight: 800;
-    white-space: nowrap;
+    font-size: 0.98rem;
 }
 
-.route-map-live-legend ol {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    counter-reset: route-stop;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.route-map-live-legend li {
-    counter-increment: route-stop;
-    padding: 8px 10px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+.route-atlas-stop-list small {
+    margin-top: 4px;
     color: var(--color-text-muted-light);
     font-size: 0.82rem;
+    line-height: 1.35;
 }
 
-.route-map-live-legend li::before {
-    content: counter(route-stop) ". ";
-    color: var(--color-accent-gold);
-    font-weight: 800;
+.route-atlas-panel-footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.route-atlas-panel-footer span {
+    color: var(--color-text-muted-light);
+    font-size: 0.86rem;
+    line-height: 1.45;
 }
 
 .route-map-fallback,
@@ -2918,21 +2917,16 @@ body.modal-open .ai-chat-window {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .route-map-live-shell {
+    .route-atlas-panel {
         min-height: auto;
         padding: 18px;
     }
 
-    .route-map-live-head {
+    .route-atlas-panel-head,
+    .route-atlas-panel-footer {
         flex-direction: column;
-    }
-
-    .route-leaflet-map {
-        height: 330px;
-    }
-
-    .route-map-live-legend {
         grid-template-columns: 1fr;
+        align-items: stretch;
     }
 
     .booking-form-grid {
@@ -2968,7 +2962,7 @@ body.modal-open .ai-chat-window {
 
     .route-map-stage,
     .route-map-details,
-    .route-map-live-shell {
+    .route-atlas-panel {
         padding: 16px;
     }
 
@@ -2982,11 +2976,7 @@ body.modal-open .ai-chat-window {
         min-height: 330px;
     }
 
-    .route-leaflet-map {
-        height: 300px;
-    }
-
-    .route-map-live-legend .btn {
+    .route-atlas-panel-footer .btn {
         width: 100%;
     }
 }
