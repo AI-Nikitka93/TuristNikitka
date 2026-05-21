@@ -21,7 +21,9 @@ html {
 
 body {
     font-family: var(--font-body);
-    background-color: var(--color-bg-dark);
+    background:
+        radial-gradient(circle at 18% 12%, rgba(0, 242, 254, 0.055), transparent 34rem),
+        linear-gradient(180deg, #070b13 0%, #050910 42%, #070b13 100%);
     color: var(--color-text-light);
     line-height: 1.6;
     overflow-x: hidden;
@@ -29,6 +31,13 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 100%;
+}
+
+main {
+    background:
+        radial-gradient(circle at 14% 22%, rgba(0, 242, 254, 0.055), transparent 32rem),
+        radial-gradient(circle at 86% 34%, rgba(242, 169, 59, 0.06), transparent 34rem),
+        linear-gradient(180deg, #070b13 0%, #050910 34%, #070b13 100%);
 }
 
 img, svg {
@@ -93,12 +102,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-dark {
-    background-color: var(--color-bg-dark);
+    background:
+        radial-gradient(circle at 18% 10%, rgba(0, 242, 254, 0.045), transparent 34rem),
+        linear-gradient(180deg, #050910 0%, #070b13 100%);
 }
 
 .section-light {
-    background-color: #f8fafc;
-    color: var(--color-text-dark);
+    background:
+        radial-gradient(circle at 18% 12%, rgba(242, 169, 59, 0.08), transparent 34rem),
+        radial-gradient(circle at 82% 18%, rgba(0, 242, 254, 0.045), transparent 32rem),
+        linear-gradient(180deg, #07101b 0%, #050910 100%);
+    color: var(--color-text-light);
 }
 
 .section-header {
@@ -145,8 +159,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section-light .section-link {
-    color: var(--color-text-muted-dark);
-    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--color-text-muted-light);
+    border-color: rgba(255, 255, 255, 0.18);
 }
 
 .section-link:hover {
@@ -386,19 +400,37 @@ body.modal-open {
    ========================================================================== */
 .hero {
     position: relative;
-    min-height: 100svh;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: min(100svh, 940px);
     display: flex;
     align-items: center;
     padding-top: 140px;
     padding-bottom: 120px;
-    background-image: linear-gradient(rgba(7, 11, 19, 0.4) 0%, rgba(7, 11, 19, 0.8) 100%), 
+    background-image:
+                      linear-gradient(180deg, rgba(7, 11, 19, 0.22) 0%, rgba(7, 11, 19, 0.62) 58%, #050910 100%),
                       url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 0;
+    height: 280px;
+    background:
+        linear-gradient(180deg, rgba(5, 9, 16, 0) 0%, rgba(5, 9, 16, 0.74) 48%, #050910 100%);
+    pointer-events: none;
 }
 
 .hero-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
     gap: 60px;
