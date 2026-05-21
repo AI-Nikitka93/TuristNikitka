@@ -784,6 +784,17 @@ body.modal-open {
     font-size: 0.85rem;
 }
 
+.footer-legal-copy {
+    max-width: 860px;
+}
+
+.site-disclaimer {
+    margin-top: 10px;
+    color: var(--color-text-muted-light);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
 @media (max-width: 768px) {
     .footer-bottom {
         flex-direction: column;

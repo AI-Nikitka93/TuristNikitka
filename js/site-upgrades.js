@@ -10,7 +10,7 @@
             title: 'Бали: Храмы и Вулканы',
             destination: 'Бали',
             country: 'Индонезия',
-            price: 120000,
+            price: 3600,
             durationDays: 7,
             pace: 'balanced',
             region: 'asia',
@@ -32,7 +32,7 @@
             title: 'Пхукет: Морская Одиссея',
             destination: 'Пхукет',
             country: 'Таиланд',
-            price: 98000,
+            price: 2950,
             durationDays: 8,
             pace: 'balanced',
             region: 'asia',
@@ -54,7 +54,7 @@
             title: 'Каппадокия: Полет мечты',
             destination: 'Каппадокия',
             country: 'Турция',
-            price: 60000,
+            price: 1800,
             durationDays: 4,
             pace: 'active',
             region: 'middle',
@@ -77,7 +77,7 @@
             destination: 'Швейцария',
             country: 'Швейцария',
             focusName: 'Альпы',
-            price: 130000,
+            price: 3900,
             durationDays: 7,
             pace: 'balanced',
             region: 'europe',
@@ -99,7 +99,7 @@
             title: 'Санторини: Греческая Сказка',
             destination: 'Санторини',
             country: 'Греция',
-            price: 110000,
+            price: 3300,
             durationDays: 6,
             pace: 'slow',
             region: 'europe',
@@ -122,7 +122,7 @@
             destination: 'Мальдивы',
             country: 'Мальдивы',
             focusName: 'Атоллы',
-            price: 180000,
+            price: 5400,
             durationDays: 6,
             pace: 'slow',
             region: 'islands',
@@ -144,7 +144,7 @@
             title: 'Дубай: Город будущего',
             destination: 'Дубай',
             country: 'ОАЭ',
-            price: 95000,
+            price: 2850,
             durationDays: 5,
             pace: 'active',
             region: 'middle',
@@ -167,7 +167,7 @@
             destination: 'Норвегия',
             country: 'Норвегия',
             focusName: 'Фьорды',
-            price: 155000,
+            price: 4650,
             durationDays: 9,
             pace: 'active',
             region: 'europe',
@@ -190,7 +190,7 @@
             destination: 'Япония',
             country: 'Япония',
             focusName: 'Токио-Киото',
-            price: 210000,
+            price: 6300,
             durationDays: 10,
             pace: 'active',
             region: 'asia',
@@ -211,12 +211,12 @@
 
     const byId = new Map(routeProfiles.map((tour) => [tour.id, tour]));
     window.NikitkaTravel = {
-        origin: { name: 'Москва', lat: 55.7558, lng: 37.6173 },
+        origin: { name: 'Минск', lat: 53.9006, lng: 27.5590 },
         routes: routeProfiles,
         getRoute: (id) => byId.get(id)
     };
 
-    const formatPrice = (value) => `${Number(value).toLocaleString('ru-RU')} ₽`;
+    const formatPrice = (value) => `${Number(value).toLocaleString('ru-RU')} BYN`;
     let matcherMapApi = { selectRoute() {} };
     const routeCountryLabel = (tour) => tour.country || tour.destination;
     const routePlaceLabel = (tour) => tour.focusName || tour.destination;
@@ -565,7 +565,7 @@
         const runMatch = () => {
             const formData = new FormData(form);
             const preferences = {
-                budget: Number(formData.get('budget') || 130000),
+                budget: Number(formData.get('budget') || 3900),
                 pace: formData.get('pace') || 'balanced',
                 interest: formData.get('interest') || 'nature',
                 season: formData.get('season') || 'summer',
@@ -786,3 +786,4 @@
         initBookingRoutePreview();
     });
 })();
+

@@ -183,12 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-gradient" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
                     <select name="route" id="routeSelect">
                         <option value="all">Выберите авиамаршрут</option>
-                        <option value="dps">Москва (SVO) → Денпасар (DPS)</option>
-                        <option value="hkt">Москва (VKO) → Пхукет (HKT)</option>
-                        <option value="ist">Москва (DME) → Стамбул (IST)</option>
-                        <option value="zrh">Москва (SVO) → Цюрих (ZRH)</option>
-                        <option value="dxb">Москва (DME) → Дубай (DXB)</option>
-                        <option value="mle">Москва (SVO) → Мале (MLE)</option>
+                        <option value="dps">Минск (MSQ) → Денпасар (DPS)</option>
+                        <option value="hkt">Минск (MSQ) → Пхукет (HKT)</option>
+                        <option value="ist">Минск (MSQ) → Стамбул (IST)</option>
+                        <option value="zrh">Минск (MSQ) → Цюрих (ZRH)</option>
+                        <option value="dxb">Минск (MSQ) → Дубай (DXB)</option>
+                        <option value="mle">Минск (MSQ) → Мале (MLE)</option>
                     </select>
                 </div>
             </div>
@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 response = "Дубай подойдет для короткой насыщенной поездки: центр города, Марина, пустыня и пляжный день. Тур рассчитан на 5 дней.";
                 btnData = { text: "Открыть заявку в Дубай", url: "tours.html?book=tour-dubai", action: "book", tourId: "tour-dubai" };
             } else if (lower.includes('бюджет') || lower.includes('стоимост') || lower.includes('сколько')) {
-                response = "В каталоге цены указаны за человека. Быстрые ориентиры: Каппадокия от 60 000 ₽, Дубай от 95 000 ₽, Бали от 120 000 ₽, Швейцария от 130 000 ₽. В заявке сумма пересчитывается по числу путешественников и классу размещения.";
+                response = "В каталоге цены указаны за человека. Быстрые ориентиры: Каппадокия от 1 800 BYN, Дубай от 2 850 BYN, Бали от 3 600 BYN, Швейцария от 3 900 BYN. В заявке сумма пересчитывается по числу путешественников и классу размещения.";
                 btnData = { text: "Открыть каталог", url: "tours.html" };
             } else if (lower.includes('отел')) {
                 response = "В этой демо-версии отели не ищутся через внешний сервис. Выберите тур и укажите пожелания к размещению в заявке: у моря, центр города, вилла, семейный формат или 5-звездочный комфорт.";
@@ -535,3 +535,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initAIChatConcierge();
 });
+

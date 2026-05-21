@@ -1,7 +1,7 @@
 import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-const fmtPrice = (value) => `${Number(value).toLocaleString('ru-RU')} ₽`;
-const origin = { name: 'Москва', lat: 55.7558, lng: 37.6173 };
+const fmtPrice = (value) => `${Number(value).toLocaleString('ru-RU')} BYN`;
+const origin = { name: 'Минск', lat: 53.9006, lng: 27.5590 };
 const countryLabel = (route) => route.country || route.destination;
 const placeLabel = (route) => route.focusName || route.destination;
 const earthTextureUrl = 'assets/earth/earth-blue-marble-august.jpg';
@@ -37,7 +37,7 @@ const updateCopy = (route) => {
 
     if (title) title.textContent = `${countryLabel(route)}: ${route.title}`;
     if (description) {
-        description.textContent = `${route.bestFor}. 3D-глобус использует текстуру NASA Blue Marble, показывает перелет из Москвы и раскрывает точки маршрута.`;
+        description.textContent = `${route.bestFor}. 3D-глобус использует текстуру NASA Blue Marble, показывает перелет из Минска и раскрывает точки маршрута.`;
     }
     if (days) days.textContent = route.durationDays;
     if (stops) stops.textContent = route.coordinates.length;
@@ -463,3 +463,4 @@ document.addEventListener('DOMContentLoaded', () => {
     createAtlasControls(routes, selectRoute);
     selectRoute(routes[0].id);
 });
+

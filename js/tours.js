@@ -11,7 +11,7 @@ const TOURS_DATA = [
         destinationName: 'Бали, Индонезия',
         duration: '7 дней / 6 ночей',
         durationDays: 7,
-        price: 120000,
+        price: 3600,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80',
         badge: null,
@@ -26,7 +26,7 @@ const TOURS_DATA = [
         destinationName: 'Пхукет, Таиланд',
         duration: '8 дней / 7 ночей',
         durationDays: 8,
-        price: 98000,
+        price: 2950,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600&q=80',
         badge: null,
@@ -41,7 +41,7 @@ const TOURS_DATA = [
         destinationName: 'Каппадокия, Турция',
         duration: '4 дня / 3 ночи',
         durationDays: 4,
-        price: 60000,
+        price: 1800,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=600&q=80',
         badge: '-10%',
@@ -56,8 +56,8 @@ const TOURS_DATA = [
         destinationName: 'Альпы, Швейцария',
         duration: '7 дней / 6 ночей',
         durationDays: 7,
-        price: 130000,
-        originalPrice: 153000,
+        price: 3900,
+        originalPrice: 4590,
         image: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=600&q=80',
         badge: '-15%',
         rating: 5,
@@ -71,7 +71,7 @@ const TOURS_DATA = [
         destinationName: 'Санторини, Греция',
         duration: '6 дней / 5 ночей',
         durationDays: 6,
-        price: 110000,
+        price: 3300,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
         badge: null,
@@ -86,8 +86,8 @@ const TOURS_DATA = [
         destinationName: 'Мальдивы',
         duration: '6 дней / 5 ночей',
         durationDays: 6,
-        price: 180000,
-        originalPrice: 200000,
+        price: 5400,
+        originalPrice: 6000,
         image: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=600&q=80',
         badge: '-10%',
         rating: 5,
@@ -101,7 +101,7 @@ const TOURS_DATA = [
         destinationName: 'Дубай, ОАЭ',
         duration: '5 дней / 4 ночи',
         durationDays: 5,
-        price: 95000,
+        price: 2850,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80',
         badge: null,
@@ -116,8 +116,8 @@ const TOURS_DATA = [
         destinationName: 'Норвегия',
         duration: '9 дней / 8 ночей',
         durationDays: 9,
-        price: 155000,
-        originalPrice: 175000,
+        price: 4650,
+        originalPrice: 5250,
         image: 'https://images.unsplash.com/photo-1527004013197-933c4bb611b3?auto=format&fit=crop&w=600&q=80',
         badge: '-12%',
         rating: 5,
@@ -131,7 +131,7 @@ const TOURS_DATA = [
         destinationName: 'Япония',
         duration: '10 дней / 9 ночей',
         durationDays: 10,
-        price: 210000,
+        price: 6300,
         originalPrice: null,
         image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=600&q=80',
         badge: 'Популярно',
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (priceRangeInput && priceRangeValue) {
         priceRangeInput.addEventListener('input', () => {
             const formattedPrice = Number(priceRangeInput.value).toLocaleString('ru-RU');
-            priceRangeValue.textContent = `до ${formattedPrice} ₽`;
+            priceRangeValue.textContent = `до ${formattedPrice} BYN`;
         });
     }
 
@@ -196,10 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const hasOldPrice = tour.originalPrice !== null;
             const priceHtml = hasOldPrice 
                 ? `<div class="offer-price-row">
-                     <span class="offer-price">${tour.price.toLocaleString('ru-RU')} ₽</span>
-                     <span class="offer-old-price">${tour.originalPrice.toLocaleString('ru-RU')} ₽</span>
+                     <span class="offer-price">${tour.price.toLocaleString('ru-RU')} BYN</span>
+                     <span class="offer-old-price">${tour.originalPrice.toLocaleString('ru-RU')} BYN</span>
                    </div>`
-                : `<span class="offer-price">${tour.price.toLocaleString('ru-RU')} ₽</span>`;
+                : `<span class="offer-price">${tour.price.toLocaleString('ru-RU')} BYN</span>`;
             
             let badgeHtml = '';
             if (tour.badge) {
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set inputs
         document.getElementById('bookingTourId').value = tour.id;
         document.getElementById('bookingTourTitle').textContent = tour.title;
-        document.getElementById('bookingTourPrice').textContent = `${tour.price.toLocaleString('ru-RU')} ₽`;
+        document.getElementById('bookingTourPrice').textContent = `${tour.price.toLocaleString('ru-RU')} BYN`;
         
         // Passengers recalculation helper
         const passengersInput = document.getElementById('passengersCount');
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const recalculatePrice = () => {
             const count = Number(passengersInput.value) || 1;
             const total = Math.round(tour.price * count * currentMultiplier);
-            totalAmountText.textContent = `${total.toLocaleString('ru-RU')} ₽`;
+            totalAmountText.textContent = `${total.toLocaleString('ru-RU')} BYN`;
         };
 
         // Reset active room options back to standard on open
@@ -455,3 +455,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
