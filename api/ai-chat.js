@@ -35,7 +35,11 @@ const FALLBACK_REPLY = 'AI-провайдер еще не подключен и�
 
 const sanitizeMessage = (value) => String(value || '').replace(/\s+/g, ' ').trim().slice(0, 900);
 
-const getProviderOrder = () => {
+const getProviderOrder = (requestedProvider) => {
+    if (requestedProvider && PROVIDERS[requestedProvider]) {
+        return [requestedProvider];
+    }
+
     const configured = String(process.env.AI_PROVIDER || 'auto').toLowerCase().trim();
     if (configured && configured !== 'auto' && PROVIDERS[configured]) {
         return [configured];
@@ -132,7 +136,9 @@ export default async function handler(req, res) {
     }
 
     const errors = [];
-    for (const providerId of getProviderOrder()) {
+    const requestedProvider = String(body.provider || '').toLowerCase().trim();
+
+    for (const providerId of getProviderOrder(requestedProvider)) {
         try {
             const result = await callProvider(providerId, messages);
             res.status(200).json({ ok: true, ...result });
