@@ -4,6 +4,7 @@ const fmtPrice = (value) => `${Number(value).toLocaleString('ru-RU')} ₽`;
 const origin = { name: 'Москва', lat: 55.7558, lng: 37.6173 };
 const countryLabel = (route) => route.country || route.destination;
 const placeLabel = (route) => route.focusName || route.destination;
+const earthTextureUrl = 'assets/earth/earth-blue-marble-august.jpg';
 
 const getRoutes = () => {
     const source = window.NikitkaTravel?.routes || [];
@@ -36,7 +37,7 @@ const updateCopy = (route) => {
 
     if (title) title.textContent = `${countryLabel(route)}: ${route.title}`;
     if (description) {
-        description.textContent = `${route.bestFor}. 3D-глобус показывает международный перелет из Москвы, а карта ниже раскрывает реальные точки маршрута.`;
+        description.textContent = `${route.bestFor}. 3D-глобус использует текстуру NASA Blue Marble, показывает перелет из Москвы и раскрывает точки маршрута.`;
     }
     if (days) days.textContent = route.durationDays;
     if (stops) stops.textContent = route.coordinates.length;
@@ -151,7 +152,7 @@ const makeGridLines = (globeGroup) => {
     const gridMaterial = new THREE.LineBasicMaterial({
         color: 0x77d8ff,
         transparent: true,
-        opacity: 0.28
+        opacity: 0.18
     });
 
     for (let lat = -60; lat <= 60; lat += 30) {
@@ -169,6 +170,34 @@ const makeGridLines = (globeGroup) => {
         }
         globeGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points), gridMaterial));
     }
+};
+
+const makeStarField = () => {
+    const count = 720;
+    const positions = new Float32Array(count * 3);
+
+    for (let index = 0; index < count; index += 1) {
+        const radius = 16 + Math.random() * 16;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[(index * 3) + 1] = radius * Math.cos(phi);
+        positions[(index * 3) + 2] = radius * Math.sin(phi) * Math.sin(theta);
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    return new THREE.Points(
+        geometry,
+        new THREE.PointsMaterial({
+            color: 0xb8e7ff,
+            size: 0.032,
+            transparent: true,
+            opacity: 0.58,
+            depthWrite: false
+        })
+    );
 };
 
 const initGlobe = () => {
@@ -204,8 +233,12 @@ const initGlobe = () => {
             canvas,
             antialias: true,
             alpha: true,
-            powerPreference: 'default'
+            powerPreference: 'default',
+            preserveDrawingBuffer: new URLSearchParams(window.location.search).has('earthGlobeQa')
         });
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.18;
     } catch (error) {
         section.classList.add('route-atlas-no-webgl');
         section.insertAdjacentHTML('beforeend', '<div class="route-atlas-unavailable">WebGL недоступен, 3D-глобус отключен.</div>');
@@ -218,34 +251,65 @@ const initGlobe = () => {
     const routeGroup = new THREE.Group();
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    camera.position.set(0, 0.2, 7.2);
+    camera.position.set(0, 0.16, 7);
+    const applyGlobePlacement = () => {
+        if (window.innerWidth >= 900) {
+            globeGroup.position.set(-1.24, -0.03, 0);
+        } else {
+            globeGroup.position.set(0.05, -0.02, 0);
+        }
+    };
+    applyGlobePlacement();
     scene.add(globeGroup);
     globeGroup.add(routeGroup);
+    scene.add(makeStarField());
 
-    scene.add(new THREE.AmbientLight(0x9fdcff, 0.7));
-    const keyLight = new THREE.PointLight(0xf2a93b, 3.2, 16);
-    keyLight.position.set(3.8, 2.8, 4.5);
+    scene.add(new THREE.AmbientLight(0x9fdcff, 0.46));
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    sunLight.position.set(-3.8, 2.4, 5.4);
+    scene.add(sunLight);
+    const keyLight = new THREE.PointLight(0xf2a93b, 1.25, 16);
+    keyLight.position.set(4.2, 2.5, 4.2);
     scene.add(keyLight);
 
     const globe = new THREE.Mesh(
-        new THREE.SphereGeometry(2.15, 72, 72),
+        new THREE.SphereGeometry(2.22, 96, 96),
         new THREE.MeshStandardMaterial({
-            color: 0x0b1825,
-            emissive: 0x082334,
-            metalness: 0.08,
-            roughness: 0.72,
+            color: 0x6f92a9,
+            emissive: 0x02070d,
+            metalness: 0.02,
+            roughness: 0.86,
             transparent: true,
             opacity: 1
         })
     );
     globeGroup.add(globe);
+    canvas.dataset.earthTexture = 'loading';
+    canvas.dataset.earthTextureSource = 'NASA Blue Marble';
+
+    new THREE.TextureLoader().load(
+        earthTextureUrl,
+        (texture) => {
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy?.() || 1, 8);
+            globe.material.map = texture;
+            globe.material.color.set(0xffffff);
+            globe.material.needsUpdate = true;
+            canvas.dataset.earthTexture = 'ready';
+            renderer.render(scene, camera);
+        },
+        undefined,
+        () => {
+            canvas.dataset.earthTexture = 'fallback';
+        }
+    );
 
     const atmosphere = new THREE.Mesh(
-        new THREE.SphereGeometry(2.36, 72, 72),
+        new THREE.SphereGeometry(2.44, 96, 96),
         new THREE.MeshBasicMaterial({
             color: 0x00f2fe,
             transparent: true,
-            opacity: 0.13,
+            opacity: 0.10,
             side: THREE.BackSide
         })
     );
@@ -260,7 +324,7 @@ const initGlobe = () => {
 
     const addDot = (point, material, scale = 1) => {
         const dot = new THREE.Mesh(new THREE.SphereGeometry(0.045 * scale, 18, 18), material);
-        dot.position.copy(latLngToVector3(point, 2.265));
+        dot.position.copy(latLngToVector3(point, 2.34));
         routeGroup.add(dot);
     };
 
@@ -269,13 +333,13 @@ const initGlobe = () => {
         canvas.dataset.selectedRoute = route.id;
 
         const firstPoint = route.coordinates[0];
-        routeGroup.add(new THREE.Line(makeArc(origin, firstPoint, 2.22, 0.72), flightMaterial));
+        routeGroup.add(new THREE.Line(makeArc(origin, firstPoint, 2.31, 0.72), flightMaterial));
         addDot(origin, originMaterial, 1.25);
 
         route.coordinates.forEach((point, index) => {
             addDot(point, index === 0 ? activeStopMaterial : stopMaterial, index === 0 ? 1.25 : 1);
             if (index > 0) {
-                routeGroup.add(new THREE.Line(makeArc(route.coordinates[index - 1], point, 2.23, 0.18), routeMaterial));
+                routeGroup.add(new THREE.Line(makeArc(route.coordinates[index - 1], point, 2.32, 0.18), routeMaterial));
             }
         });
 
@@ -292,6 +356,7 @@ const initGlobe = () => {
         renderer.setSize(width, height, false);
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
+        applyGlobePlacement();
     };
 
     const resizeObserver = new ResizeObserver(resize);
