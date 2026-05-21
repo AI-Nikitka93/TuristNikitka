@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас — Nikitka AI Travel</title>
+    <meta name="description" content="Узнайте больше о философии Nikitka AI Travel. Наша миссия — создание идеальных авторских маршрутов с помощью ИИ и опыта лучших гидов.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 60px 0;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--color-accent-gold);
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-desc {
+            font-size: 0.95rem;
+            color: var(--color-text-muted-light);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--color-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            padding: 30px 20px;
+            transition: all var(--transition-normal);
+        }
+
+        .team-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(242, 169, 59, 0.25);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 2px solid rgba(242, 169, 59, 0.3);
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .team-role {
+            font-size: 0.85rem;
+            color: var(--color-accent-gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .team-bio {
+            font-size: 0.9rem;
+            color: var(--color-text-muted-light);
+            line-height: 1.5;
+        }
+
+        .philosophy-row {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .philosophy-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global SVG Gradient Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;">
+        <defs>
+            <linearGradient id="gold-teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2a93b" />
+                <stop offset="100%" stop-color="#00f2fe" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Header Navigation -->
+    <header class="header sticky" id="mainHeader">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    Nikitka AI
+                    <span>Travel</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="tours.html" class="nav-link">Туры</a>
+                <a href="destinations.html" class="nav-link">Направления</a>
+                <a href="about.html" class="nav-link active">О нас</a>
+                <a href="services.html" class="nav-link">Услуги</a>
+                <a href="blog.html" class="nav-link">Блог</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="tel:+79991234567" class="nav-phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    +7 (999) 123-45-67
+                </a>
+                <a href="contacts.html" class="btn btn-outline">Связаться с нами</a>
+            </div>
+            
+            <button class="nav-burger" id="navBurger" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <main style="padding-top: 120px;">
+        <section class="section section-dark">
+            <div class="container">
+                <div class="philosophy-row">
+                    <div>
+                        <span class="section-subtitle">О нашей компании</span>
+                        <h1 class="hero-title" style="font-size: 3rem; margin-bottom: 20px;">Новая эра разумных путешествий</h1>
+                        <p class="hero-desc" style="font-size: 1.05rem; margin-bottom: 24px;">
+                            Мы основали Nikitka AI Travel с простой, но амбициозной целью: переосмыслить подход к созданию туров. Мы верим, что путешествие должно быть не просто сменой локаций, а глубоким, персонализированным и абсолютно беззаботным опытом.
+                        </p>
+                        <p class="hero-desc" style="font-size: 1.05rem; margin-bottom: 24px;">
+                            В этой портфолио-версии AI-слой работает честно: локальный скоринг сравнивает бюджет, сезон, темп и интересы с набором маршрутов прямо в браузере. Дальше пользователь оставляет заявку, а интерфейс показывает, какие точки и пожелания попадут в маршрутный лист.
+                        </p>
+                    </div>
+                    <div>
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: var(--radius-xl); box-shadow: var(--shadow-premium); position: relative; overflow: hidden; min-height: 400px;">
+                            <!-- Animated background glow -->
+                            <div style="position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 1;"></div>
+                            
+                            <!-- AI Avatar component -->
+                            <div class="ai-interactive-avatar" id="aboutAIAvatar" style="z-index: 2; transform: scale(1.15);">
+                                <div class="ai-robot-head">
+                                    <div class="ai-robot-antenna"></div>
+                                    <div class="ai-robot-eye left"></div>
+                                    <div class="ai-robot-eye right"></div>
+                                    <div class="ai-robot-mouth"></div>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 35px; z-index: 2;">
+                                <h4 style="font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-text-light); margin-bottom: 8px;">Nikitka AI Core</h4>
+                                <p style="font-size: 0.85rem; color: var(--color-accent-teal); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">Локальный подбор без платных API</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Section -->
+                <div class="stats-grid">
+                    <div class="glass-panel-dark stat-card">
+                        <div class="stat-number">9</div>
+                        <div class="stat-desc">Демо-маршрутов в каталоге</div>
+                    </div>
+                    <div class="glass-panel-dark stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-desc">Ключевых сценария заявки</div>
+                    </div>
+                    <div class="glass-panel-dark stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-desc">Платных API в MVP</div>
+                    </div>
+                    <div class="glass-panel-dark stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-desc">Карты: маршруты и офис</div>
+                    </div>
+                </div>
+
+                <!-- Team Section -->
+                <div style="margin-top: 80px;">
+                    <div class="section-title-wrapper" style="text-align: center; margin: 0 auto 40px auto;">
+                        <span class="section-subtitle">Наша команда</span>
+                        <h2 class="section-title">Люди, которые создают магию</h2>
+                    </div>
+                    
+                    <div class="team-grid">
+                        <!-- Member 1 -->
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="Мария Власова">
+                            </div>
+                            <h3>Мария Власова</h3>
+                            <div class="team-role">Продуктовая роль</div>
+                            <p class="team-bio">Отвечает за позиционирование демо: каталог должен выглядеть как реальный travel-продукт, но без вымышленных бизнес-метрик.</p>
+                        </div>
+                        
+                        <!-- Member 2 -->
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Никита Петров">
+                            </div>
+                            <h3>Никита Петров</h3>
+                            <div class="team-role">Тревел-дизайнер</div>
+                            <p class="team-bio">Собирает маршруты вокруг понятных точек: прилет, ключевые локации, отдых, активность и финальная заявка.</p>
+                        </div>
+                        
+                        <!-- Member 3 -->
+                        <div class="team-card">
+                            <div class="team-avatar">
+                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Дмитрий Соколов">
+                            </div>
+                            <h3>Дмитрий Соколов</h3>
+                            <div class="team-role">Frontend / AI логика</div>
+                            <p class="team-bio">Держит AI-слой бесплатным и проверяемым: локальный скоринг, валидные ссылки, заявка без внешних ключей.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">N</div>
+                        <div class="logo-text">
+                            Nikitka AI
+                            <span>Travel</span>
+                        </div>
+                    </a>
+                    <p>Мы создаем путешествия, которые вдохновляют. Откройте мир вместе с нами!</p>
+                    <div class="footer-socials">
+                        <a href="https://instagram.com" class="social-icon" target="_blank" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://vk.com" class="social-icon" target="_blank" aria-label="VK">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.46 11.53c-.34.62-.97 1.25-1.89 1.89-.92.64-1.89.96-2.91.96-1.52 0-2.86-.48-4.02-1.44C6.48 13.98 5.67 12.7 5.2 11.1c-.24-.76-.36-1.5-.36-2.22 0-1.12.33-2.01.99-2.67.66-.66 1.55-.99 2.67-.99.72 0 1.36.16 1.92.48.56.32.96.79 1.2 1.41.24-.62.64-1.09 1.2-1.41.56-.32 1.2-.48 1.92-.48 1.12 0 2.01.33 2.67.99.66.66.99 1.55.99 2.67 0 .72-.12 1.46-.36 2.22-.47 1.6-1.28 2.88-2.43 3.84-1.15.96-2.49 1.44-4.01 1.44-1.02 0-1.99-.32-2.91-.96-.92-.64-1.55-1.27-1.89-1.89z"></path></svg>
+                        </a>
+                        <a href="https://telegram.org" class="social-icon" target="_blank" aria-label="Telegram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </a>
+                        <a href="https://youtube.com" class="social-icon" target="_blank" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Помощь</h4>
+                    <ul class="footer-links">
+                        <li><a href="contacts.html">Вопросы и ответы</a></li>
+                        <li><a href="contacts.html">Условия бронирования</a></li>
+                        <li><a href="services.html">Страхование</a></li>
+                        <li><a href="contacts.html">Поддержка</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Направления</h4>
+                    <ul class="footer-links">
+                        <li><a href="tours.html?destination=bali">Азия</a></li>
+                        <li><a href="tours.html?destination=swiss">Европа</a></li>
+                        <li><a href="tours.html?destination=dubai">Ближний Восток</a></li>
+                        <li><a href="tours.html?destination=maldives">Острова</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <div class="footer-contact-info">
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:info@nikitka.ai">info@nikitka.ai</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Москва, Россия</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nikitka AI Travel. Все права защищены.</p>
+                <div class="footer-bottom-links">
+                    <a href="contacts.html">Политика конфиденциальности</a>
+                    <a href="contacts.html">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

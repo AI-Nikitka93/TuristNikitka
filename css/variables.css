@@ -1,0 +1,64 @@
+/* CSS Variables & Design Tokens for Nikitka AI Travel */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Color Palette */
+    --color-bg-dark: #070b13;            /* Deep Space Navy */
+    --color-bg-dark-rgb: 7, 11, 19;
+    --color-bg-light: #ffffff;           /* Clean white panels */
+    --color-bg-light-rgb: 255, 255, 255;
+    
+    --color-accent-gold: #f2a93b;        /* Warm Honey Amber Gold */
+    --color-accent-gold-rgb: 242, 169, 59;
+    --color-accent-gold-hover: #e09322;
+    
+    --color-accent-teal: #00f2fe;        /* Electric Cyan / Teal */
+    --color-accent-teal-rgb: 0, 242, 254;
+    --color-accent-indigo: #4f46e5;      /* Tech Indigo */
+    --color-accent-indigo-rgb: 79, 70, 229;
+    
+    --color-accent-red: #ef4444;         /* Coral red for discount badges */
+    
+    /* Premium Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-accent-gold) 0%, var(--color-accent-teal) 100%);
+    --gradient-glow: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%);
+    --gradient-gold-indigo: linear-gradient(135deg, var(--color-accent-gold) 0%, var(--color-accent-indigo) 100%);
+    --gradient-text: linear-gradient(135deg, #ffffff 0%, var(--color-text-muted-light) 100%);
+    
+    /* Text Colors */
+    --color-text-light: #ffffff;
+    --color-text-muted-light: #94a3b8;   /* Slate 400 for dark layouts */
+    --color-text-dark: #1e293b;          /* Slate 800 for light layouts */
+    --color-text-muted-dark: #64748b;    /* Slate 500 for light layouts */
+    
+    /* Fonts */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    
+    /* UI Tokens */
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-full: 9999px;
+    
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    --shadow-premium: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Glassmorphism Styles */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-blur: 16px;
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    
+    --glass-dark-bg: rgba(7, 11, 19, 0.65);
+    --glass-dark-border: rgba(255, 255, 255, 0.05);
+    
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}

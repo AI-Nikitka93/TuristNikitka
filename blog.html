@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог о путешествиях — Nikitka AI Travel</title>
+    <meta name="description" content="Советы туристам, рассказы о путешествиях, обзоры стран и новости интеграции ИИ в тревел-индустрию в блоге Nikitka AI Travel.">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .blog-card {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--color-bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(242, 169, 59, 0.25);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .blog-card-img {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .blog-card:hover .blog-card-img img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-category {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--color-accent-gold);
+            color: #070b13;
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+
+        .blog-card-content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--color-text-muted-light);
+            margin-bottom: 12px;
+        }
+
+        .blog-card-content h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            color: var(--color-text-light);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card-content p {
+            font-size: 0.9rem;
+            color: var(--color-text-muted-light);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 16px;
+        }
+
+        .blog-author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .blog-author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-author-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Global SVG Gradient Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;">
+        <defs>
+            <linearGradient id="gold-teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2a93b" />
+                <stop offset="100%" stop-color="#00f2fe" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Header Navigation -->
+    <header class="header sticky" id="mainHeader">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    Nikitka AI
+                    <span>Travel</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Главная</a>
+                <a href="tours.html" class="nav-link">Туры</a>
+                <a href="destinations.html" class="nav-link">Направления</a>
+                <a href="about.html" class="nav-link">О нас</a>
+                <a href="services.html" class="nav-link">Услуги</a>
+                <a href="blog.html" class="nav-link active">Блог</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="tel:+79991234567" class="nav-phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    +7 (999) 123-45-67
+                </a>
+                <a href="contacts.html" class="btn btn-outline">Связаться с нами</a>
+            </div>
+            
+            <button class="nav-burger" id="navBurger" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <main style="padding-top: 120px;">
+        <section class="section section-dark">
+            <div class="container">
+                <div class="section-title-wrapper" style="margin: 0 auto 50px auto; text-align: center;">
+                    <span class="section-subtitle">Полезное чтиво</span>
+                    <h2 class="section-title" style="font-size: 3rem;">Блог о путешествиях</h2>
+                    <p style="color: var(--color-text-muted-light); margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        Секреты местных гидов, лайфхаки для перелетов, путеводители по лучшим ресторанам и последние тренды умного туризма с ИИ.
+                    </p>
+                </div>
+
+                <!-- Category Pills -->
+                <div class="region-tabs" id="blogCategoryTabs">
+                    <button class="region-tab active" onclick="filterBlog('all', this)">Все статьи</button>
+                    <button class="region-tab" onclick="filterBlog('guides', this)">Путеводители</button>
+                    <button class="region-tab" onclick="filterBlog('tips', this)">Лайфхаки</button>
+                    <button class="region-tab" onclick="filterBlog('ai', this)">AI в туризме</button>
+                </div>
+
+                <!-- Blog Grid -->
+                <div class="blog-grid" id="blogGrid">
+                    <!-- Article 1 -->
+                    <div class="blog-card glow-card animate-on-scroll" data-category="guides" onclick="showArticleModal('Топ-5 скрытых пляжей Бали, о которых знают только местные', 'Скрытые от глаз массового туриста лагуны, вулканические черные пляжи и уединенные бухты Бали, которые поразят ваше воображение...')">
+                        <div class="blog-card-img">
+                            <span class="blog-card-category" style="background: var(--color-accent-teal); color: #070b13;">Путеводители</span>
+                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80" alt="Бали">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">
+                                <span>20 мая 2026</span>
+                                <span>•</span>
+                                <span>5 мин чтения</span>
+                            </div>
+                            <h3>Топ-5 скрытых пляжей Бали, о которых знают только местные</h3>
+                            <p>Скрытые от глаз массового туриста лагуны, вулканические черные пляжи и уединенные бухты Бали, которые поразят ваше воображение...</p>
+                            <div class="blog-card-author">
+                                <div class="blog-author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Мария">
+                                </div>
+                                <span class="blog-author-name">Мария Власова</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 2 -->
+                    <div class="blog-card glow-card animate-on-scroll" data-category="tips" onclick="showArticleModal('Как пережить длинный перелет: 10 проверенных советов', 'Смена часовых поясов, сухой воздух в салоне и неудобные кресла — рассказываем, как прилететь на отдых свежим и бодрым...')">
+                        <div class="blog-card-img">
+                            <span class="blog-card-category" style="background: var(--color-accent-gold); color: #070b13;">Лайфхаки</span>
+                            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" alt="Самолет">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">
+                                <span>18 мая 2026</span>
+                                <span>•</span>
+                                <span>4 мин чтения</span>
+                            </div>
+                            <h3>Как пережить длинный перелет: 10 проверенных советов</h3>
+                            <p>Смена часовых поясов, сухой воздух в салоне и неудобные кресла — рассказываем, как прилететь на отдых свежим и бодрым...</p>
+                            <div class="blog-card-author">
+                                <div class="blog-author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Никита">
+                                </div>
+                                <span class="blog-author-name">Никита Петров</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 3 -->
+                    <div class="blog-card glow-card animate-on-scroll" data-category="ai" onclick="showArticleModal('Искусственный интеллект в путешествиях: миф или реальность?', 'Как нейросети помогают экономить сотни долларов на авиабилетах и создавать маршруты, о которых не знают классические гиды...')">
+                        <div class="blog-card-img">
+                            <span class="blog-card-category" style="background: var(--gradient-primary); color: #070b13; box-shadow: 0 0 10px rgba(0,242,254,0.3);">AI в туризме</span>
+                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80" alt="ИИ">
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">
+                                <span>15 мая 2026</span>
+                                <span>•</span>
+                                <span>7 мин чтения</span>
+                            </div>
+                            <h3>Искусственный интеллект в путешествиях: миф или реальность?</h3>
+                            <p>Как нейросети помогают экономить сотни долларов на авиабилетах и создавать маршруты, о которых не знают классические гиды...</p>
+                            <div class="blog-card-author">
+                                <div class="blog-author-avatar">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Дмитрий">
+                                </div>
+                                <span class="blog-author-name">Дмитрий Соколов</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Article Detail Modal -->
+    <div class="modal-overlay" id="articleModal">
+        <div class="glass-panel-dark modal-content" style="max-width: 750px;">
+            <div class="modal-header">
+                <h3 id="articleTitle">Заголовок статьи</h3>
+                <button class="modal-close" onclick="closeArticleModal()">✕</button>
+            </div>
+            <div class="article-text-content" style="font-size: 1.05rem; line-height: 1.8; color: rgba(255, 255, 255, 0.85); margin-top: 10px;">
+                <p id="articleSummary" style="font-weight: 600; font-size: 1.15rem; color: var(--color-accent-gold); margin-bottom: 20px;">Краткое описание...</p>
+                <p>Полный демонстрационный контент статьи находится в разработке. Искусственный интеллект Nikitka AI уже подбирает самые интересные факты, уникальные фотографии и полезные геометки для этой публикации.</p>
+                <p style="margin-top: 15px;">Мы расскажем о том, как правильно планировать бюджет, избегать ловушек для туристов, находить скрытые достопримечательности и общаться с местными жителями для получения уникального опыта.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">N</div>
+                        <div class="logo-text">
+                            Nikitka AI
+                            <span>Travel</span>
+                        </div>
+                    </a>
+                    <p>Мы создаем путешествия, которые вдохновляют. Откройте мир вместе с нами!</p>
+                    <div class="footer-socials">
+                        <a href="https://instagram.com" class="social-icon" target="_blank" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://vk.com" class="social-icon" target="_blank" aria-label="VK">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.46 11.53c-.34.62-.97 1.25-1.89 1.89-.92.64-1.89.96-2.91.96-1.52 0-2.86-.48-4.02-1.44C6.48 13.98 5.67 12.7 5.2 11.1c-.24-.76-.36-1.5-.36-2.22 0-1.12.33-2.01.99-2.67.66-.66 1.55-.99 2.67-.99.72 0 1.36.16 1.92.48.56.32.96.79 1.2 1.41.24-.62.64-1.09 1.2-1.41.56-.32 1.2-.48 1.92-.48 1.12 0 2.01.33 2.67.99.66.66.99 1.55.99 2.67 0 .72-.12 1.46-.36 2.22-.47 1.6-1.28 2.88-2.43 3.84-1.15.96-2.49 1.44-4.01 1.44-1.02 0-1.99-.32-2.91-.96-.92-.64-1.55-1.27-1.89-1.89z"></path></svg>
+                        </a>
+                        <a href="https://telegram.org" class="social-icon" target="_blank" aria-label="Telegram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </a>
+                        <a href="https://youtube.com" class="social-icon" target="_blank" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Помощь</h4>
+                    <ul class="footer-links">
+                        <li><a href="contacts.html">Вопросы и ответы</a></li>
+                        <li><a href="contacts.html">Условия бронирования</a></li>
+                        <li><a href="services.html">Страхование</a></li>
+                        <li><a href="contacts.html">Поддержка</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Направления</h4>
+                    <ul class="footer-links">
+                        <li><a href="tours.html?destination=bali">Азия</a></li>
+                        <li><a href="tours.html?destination=swiss">Европа</a></li>
+                        <li><a href="tours.html?destination=dubai">Ближний Восток</a></li>
+                        <li><a href="tours.html?destination=maldives">Острова</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <div class="footer-contact-info">
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:info@nikitka.ai">info@nikitka.ai</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Москва, Россия</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nikitka AI Travel. Все права защищены.</p>
+                <div class="footer-bottom-links">
+                    <a href="contacts.html">Политика конфиденциальности</a>
+                    <a href="contacts.html">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+        // Simple inline filtering for blog posts
+        function filterBlog(category, btn) {
+            const tabs = document.querySelectorAll('#blogCategoryTabs .region-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+
+            const cards = document.querySelectorAll('.blog-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Article modal logic
+        const articleModal = document.getElementById('articleModal');
+        
+        function showArticleModal(title, summary) {
+            document.getElementById('articleTitle').textContent = title;
+            document.getElementById('articleSummary').textContent = summary;
+            articleModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeArticleModal() {
+            articleModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        if (articleModal) {
+            articleModal.addEventListener('click', (e) => {
+                if (e.target === articleModal) {
+                    closeArticleModal();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

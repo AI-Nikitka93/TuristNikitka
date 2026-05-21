@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikitka AI Travel — Открой мир по-новому вместе с AI</title>
+    <meta name="description" content="Nikitka AI Travel предлагает уникальные авторские туры по всему миру. Совместите мощь искусственного интеллекта и экспертный подход к планированию идеального отдыха.">
+    <meta name="keywords" content="авторские туры, путешествия с AI, отдых на Бали, туры в Каппадокию, планирование путешествий, Nikitka AI Travel">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070b13'/%3E%3Cpath d='M17 45 32 13l15 32-15-8-15 8Z' fill='%23f2a93b'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%2300f2fe'/%3E%3C/svg%3E">
+    
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <!-- Global SVG Gradient Definitions -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;">
+        <defs>
+            <linearGradient id="gold-teal-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2a93b" />
+                <stop offset="100%" stop-color="#00f2fe" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <!-- Header Navigation -->
+    <header class="header" id="mainHeader">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">N</div>
+                <div class="logo-text">
+                    Nikitka AI
+                    <span>Travel</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu" aria-label="Основная навигация">
+                <a href="index.html" class="nav-link active">Главная</a>
+                <a href="tours.html" class="nav-link">Туры</a>
+                <a href="destinations.html" class="nav-link">Направления</a>
+                <a href="about.html" class="nav-link">О нас</a>
+                <a href="services.html" class="nav-link">Услуги</a>
+                <a href="blog.html" class="nav-link">Блог</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="tel:+79991234567" class="nav-phone">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                    +7 (999) 123-45-67
+                </a>
+                <a href="contacts.html" class="btn btn-outline" id="headerContactBtn">Связаться с нами</a>
+            </div>
+            
+            <button class="nav-burger" id="navBurger" type="button" aria-label="Открыть меню" aria-controls="navMenu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="hero-badge">Портфолио-концепт тур-агентства</span>
+                    <h1 class="hero-title">Подбор тура,<br>маршрут и заявка<br>в одном сценарии</h1>
+                    <p class="hero-desc">
+                        Витрина авторских путешествий с живым каталогом, локальным AI-подбором без платных API, картой маршрутов и понятной заявкой на поездку.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="tours.html" class="btn btn-primary">Выбрать тур</a>
+                        <button class="btn-video" id="heroPlayVideoBtn" type="button" aria-haspopup="dialog">
+                            <span class="play-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                            </span>
+                            Смотреть превью
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search Widget -->
+                <div class="glass-panel-dark search-widget">
+                    <div class="widget-tabs">
+                        <button class="widget-tab active" data-tab="tours">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            Туры
+                        </button>
+                        <button class="widget-tab" data-tab="hotels">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="21" x2="9" y2="9"></line><line x1="15" y1="21" x2="15" y2="9"></line><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+                            Отели
+                        </button>
+                        <button class="widget-tab" data-tab="flights">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                            Авиабилеты
+                        </button>
+                    </div>
+                    
+                    <form action="tours.html" method="GET" id="heroSearchForm">
+                        <input type="hidden" name="category" id="searchFormCategory" value="tours">
+                        
+                        <div id="searchFieldsWrapper">
+                            <div class="search-field">
+                                <label for="destinationSelect">Куда</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <select name="destination" id="destinationSelect">
+                                        <option value="all">Выберите направление</option>
+                                        <option value="bali">Бали, Индонезия</option>
+                                        <option value="phuket">Пхукет, Таиланд</option>
+                                        <option value="cappadocia">Каппадокия, Турция</option>
+                                        <option value="swiss">Швейцария</option>
+                                        <option value="santorini">Санторини, Греция</option>
+                                        <option value="maldives">Мальдивы</option>
+                                        <option value="dubai">Дубай, ОАЭ</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="search-field">
+                                <label for="searchDate">Когда</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <input type="date" id="searchDate" name="date">
+                                </div>
+                            </div>
+                            
+                            <div class="search-field">
+                                <label for="passengersCountSelect">Кто</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <select id="passengersCountSelect" name="passengers">
+                                        <option value="1">1 взрослый</option>
+                                        <option value="2" selected>2 взрослых</option>
+                                        <option value="3">3 взрослых</option>
+                                        <option value="4">4 взрослых</option>
+                                        <option value="family">Семья с детьми</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="searchSubmitBtn" style="width: 100%; margin-top: 10px;">
+                            Найти туры
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Value Propositions (Features Bar) -->
+        <div class="container" style="position: relative; z-index: 10;">
+            <div class="features-bar">
+                <div class="feature-item icon-container-glow">
+                    <div class="feature-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-gradient" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Авторские маршруты</h4>
+                        <p>Уникальные программы отдыха от тревел-экспертов</p>
+                    </div>
+                </div>
+                <div class="feature-item icon-container-glow">
+                    <div class="feature-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-gradient" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Маршрутная карта</h4>
+                        <p>Показывает ключевые точки поездки и сценарий отдыха</p>
+                    </div>
+                </div>
+                <div class="feature-item icon-container-glow">
+                    <div class="feature-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-gradient" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Прозрачная смета</h4>
+                        <p>Стоимость пересчитывается по людям и классу размещения</p>
+                    </div>
+                </div>
+                <div class="feature-item icon-container-glow">
+                    <div class="feature-icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-gradient" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Заявка без лишних шагов</h4>
+                        <p>Контакты, дата, состав группы и пожелания в одном окне</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Local AI Route Designer -->
+        <section class="section route-lab-section" id="routeMatcher">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-wrapper">
+                        <span class="section-subtitle">AI-подбор без платных API</span>
+                        <h2 class="section-title">Подберите маршрут под стиль поездки</h2>
+                    </div>
+                    <a href="tours.html" class="section-link">Перейти в каталог</a>
+                </div>
+
+                <div class="route-lab-grid">
+                    <aside class="trip-designer-panel">
+                        <h2>Локальный travel matcher</h2>
+                        <p>Форма не отправляет данные наружу. Скрипт сравнивает бюджет, темп, сезон и интересы с готовыми маршрутами.</p>
+
+                        <form class="trip-designer-form" id="tripDesignerForm">
+                            <div class="search-field">
+                                <label for="tripBudget">Бюджет на человека</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                    <select id="tripBudget" name="budget">
+                                        <option value="90000">до 90 000 ₽</option>
+                                        <option value="130000" selected>до 130 000 ₽</option>
+                                        <option value="180000">до 180 000 ₽</option>
+                                        <option value="230000">до 230 000 ₽</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="search-field">
+                                <label for="tripPace">Темп</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                    <select id="tripPace" name="pace">
+                                        <option value="slow">Спокойный</option>
+                                        <option value="balanced" selected>Сбалансированный</option>
+                                        <option value="active">Активный</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="search-field">
+                                <label for="tripInterest">Главный интерес</label>
+                                <div class="input-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"></path></svg>
+                                    <select id="tripInterest" name="interest">
+                                        <option value="nature" selected>Природа</option>
+                                        <option value="sea">Море</option>
+                                        <option value="culture">Культура</option>
+                                        <option value="comfort">Комфорт</option>
+                                        <option value="food">Гастрономия</option>
+                                        <option value="photo">Фото-маршрут</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="booking-form-grid" style="margin-top: 0;">
+                                <div class="search-field">
+                                    <label for="tripSeason">Сезон</label>
+                                    <div class="input-container">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line></svg>
+                                        <select id="tripSeason" name="season">
+                                            <option value="summer" selected>Лето</option>
+                                            <option value="winter">Зима</option>
+                                            <option value="spring">Весна/осень</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="search-field">
+                                    <label for="tripDuration">Дней</label>
+                                    <div class="input-container">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                        <select id="tripDuration" name="duration">
+                                            <option value="5">до 5</option>
+                                            <option value="7" selected>до 7</option>
+                                            <option value="10">до 10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Пересчитать маршрут</button>
+                        </form>
+                    </aside>
+
+                    <div class="route-map-card route-planner-card">
+                        <div class="route-map-stage">
+                            <div class="route-map-stage-head">
+                                <div>
+                                    <span class="section-subtitle">Маршрутный сценарий</span>
+                                    <h3 id="matcherMapTitle">Карта выбранного маршрута</h3>
+                                </div>
+                                <span class="route-map-live-pill">OSM</span>
+                            </div>
+                            <div class="matcher-route-map" id="matcherRouteMap" aria-label="Карта подобранного маршрута"></div>
+                            <div class="route-map-caption-row">
+                                <span>Локальный подбор без отправки анкеты</span>
+                                <strong id="matcherRouteMeta">4 точки · 7 дней</strong>
+                            </div>
+                            <div class="route-country-strip" aria-label="Маршруты по странам">
+                                <div class="route-country-strip-head">
+                                    <span>Страны маршрутов</span>
+                                    <strong id="matcherCountryCount">9 стран</strong>
+                                </div>
+                                <div class="route-country-routes" id="matcherCountryRoutes"></div>
+                            </div>
+                        </div>
+                        <div class="route-map-details route-map-details--planner" id="routeMapDetails"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3D Route Atlas & Live Map -->
+        <section class="section route-atlas-section" id="routeAtlas" aria-labelledby="routeAtlasTitle">
+            <canvas id="routeGlobeCanvas" class="route-globe-canvas" aria-label="3D глобус маршрутов"></canvas>
+            <div class="route-atlas-shade" aria-hidden="true"></div>
+            <div class="container route-atlas-inner">
+                <div class="route-atlas-copy">
+                    <span class="section-subtitle">3D + живая карта</span>
+                    <h2 class="section-title" id="routeAtlasTitle">Маршрутный атлас агентства</h2>
+                    <p id="routeAtlasDescription">
+                        Вращайте 3D-глобус, выбирайте направление и смотрите реальную карту точек маршрута на OpenStreetMap. Все работает на клиенте, без платных ключей.
+                    </p>
+
+                    <div class="route-atlas-metrics" aria-label="Сводка маршрута">
+                        <span><strong id="routeAtlasDays">7</strong> дней</span>
+                        <span><strong id="routeAtlasStops">4</strong> точки</span>
+                        <span><strong id="routeAtlasBudget">120 000 ₽</strong> от</span>
+                    </div>
+
+                    <div class="route-atlas-controls" id="routeAtlasControls" aria-label="Выбор маршрута"></div>
+                </div>
+
+                <div class="route-map-live-shell">
+                    <div class="route-map-live-head">
+                        <div>
+                            <span class="section-subtitle">OpenStreetMap</span>
+                            <h3 id="routeMapLiveTitle">Карта маршрута</h3>
+                        </div>
+                        <span class="route-map-live-pill">без API-ключа</span>
+                    </div>
+                    <div class="route-leaflet-map" id="routeLeafletMap" aria-label="Живая карта выбранного маршрута"></div>
+                    <div class="route-map-live-legend" id="routeMapLiveLegend"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Destinations Section -->
+        <section class="section section-dark">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-wrapper">
+                        <span class="section-subtitle">Ваш следующий отпуск</span>
+                        <h2 class="section-title">Популярные направления</h2>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <a href="destinations.html" class="section-link">Смотреть все направления</a>
+                        <button class="btn-icon" id="destPrevBtn" aria-label="Назад">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        </button>
+                        <button class="btn-icon" id="destNextBtn" aria-label="Вперед">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="slider-container" id="destinationsSliderContainer">
+                    <div class="slider-track">
+                        <!-- Bali -->
+                        <div class="dest-card" onclick="location.href='tours.html?destination=bali'">
+                            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&q=80" alt="Бали">
+                            <div class="dest-content">
+                                <h3>Бали, Индонезия</h3>
+                                <div class="dest-price">от <span>120 000 ₽</span></div>
+                            </div>
+                        </div>
+                        <!-- Phuket -->
+                        <div class="dest-card" onclick="location.href='tours.html?destination=phuket'">
+                            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=400&q=80" alt="Пхукет">
+                            <div class="dest-content">
+                                <h3>Пхукет, Таиланд</h3>
+                                <div class="dest-price">от <span>98 000 ₽</span></div>
+                            </div>
+                        </div>
+                        <!-- Cappadocia -->
+                        <div class="dest-card" onclick="location.href='tours.html?destination=cappadocia'">
+                            <img src="https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=400&q=80" alt="Каппадокия">
+                            <div class="dest-content">
+                                <h3>Каппадокия, Турция</h3>
+                                <div class="dest-price">от <span>75 000 ₽</span></div>
+                            </div>
+                        </div>
+                        <!-- Switzerland -->
+                        <div class="dest-card" onclick="location.href='tours.html?destination=swiss'">
+                            <img src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=400&q=80" alt="Швейцария">
+                            <div class="dest-content">
+                                <h3>Швейцария</h3>
+                                <div class="dest-price">от <span>130 000 ₽</span></div>
+                            </div>
+                        </div>
+                        <!-- Santorini -->
+                        <div class="dest-card" onclick="location.href='tours.html?destination=santorini'">
+                            <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80" alt="Санторини">
+                            <div class="dest-content">
+                                <h3>Санторини, Греция</h3>
+                                <div class="dest-price">от <span>110 000 ₽</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Offers Section -->
+        <section class="section section-light">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-wrapper">
+                        <span class="section-subtitle" style="color: var(--color-accent-gold-hover);">Лучшие цены</span>
+                        <h2 class="section-title">Специальные предложения для вас</h2>
+                    </div>
+                    <a href="tours.html" class="section-link">Смотреть все предложения</a>
+                </div>
+                
+                <div class="offers-grid">
+                    <!-- Switzerland Vertical Card -->
+                    <div class="offer-card" onclick="location.href='tours.html?destination=swiss'">
+                        <span class="offer-badge">-15%</span>
+                        <img src="https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=800&q=80" alt="Швейцария">
+                        <div class="offer-content">
+                            <div class="offer-meta">
+                                <span>7 дней / 6 ночей</span>
+                                <span>Швейцария</span>
+                            </div>
+                            <h3>Сказочная Швейцария</h3>
+                            <div class="offer-price-row">
+                                <span class="offer-price">130 000 ₽</span>
+                                <span class="offer-old-price">153 000 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Maldives Vertical Card -->
+                    <div class="offer-card" onclick="location.href='tours.html?destination=maldives'">
+                        <span class="offer-badge">-10%</span>
+                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=800&q=80" alt="Мальдивы">
+                        <div class="offer-content">
+                            <div class="offer-meta">
+                                <span>6 дней / 5 ночей</span>
+                                <span>Мальдивы</span>
+                            </div>
+                            <h3>Райский отдых на Мальдивах</h3>
+                            <div class="offer-price-row">
+                                <span class="offer-price">180 000 ₽</span>
+                                <span class="offer-old-price">200 000 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Horizontal Cards Stack -->
+                    <div class="offers-stack">
+                        <!-- Cappadocia -->
+                        <div class="offer-horizontal-card" onclick="location.href='tours.html?destination=cappadocia'">
+                            <div class="offer-horizontal-img">
+                                <span class="offer-badge" style="top: 10px; left: 10px;">-10%</span>
+                                <img src="https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?auto=format&fit=crop&w=400&q=80" alt="Каппадокия">
+                            </div>
+                            <div class="offer-horizontal-content">
+                                <div class="offer-meta">
+                                    <span>4 дня / 3 ночи</span>
+                                </div>
+                                <h3>Каппадокия: полет мечты</h3>
+                                <div class="offer-price-row" style="margin-top: 8px;">
+                                    <span class="offer-price" style="font-size: 1.1rem;">60 000 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Dubai -->
+                        <div class="offer-horizontal-card" onclick="location.href='tours.html?destination=dubai'">
+                            <div class="offer-horizontal-img">
+                                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=400&q=80" alt="Дубай">
+                            </div>
+                            <div class="offer-horizontal-content">
+                                <div class="offer-meta">
+                                    <span>5 дней / 4 ночи</span>
+                                </div>
+                                <h3>Дубай: город будущего</h3>
+                                <div class="offer-price-row" style="margin-top: 8px;">
+                                    <span class="offer-price" style="font-size: 1.1rem;">95 000 ₽</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section section-dark">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-title-wrapper">
+                        <span class="section-subtitle">Отзывы</span>
+                        <h2 class="section-title">Что говорят наши клиенты?</h2>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <button class="btn-icon" id="reviewsPrevBtn" aria-label="Назад">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        </button>
+                        <button class="btn-icon" id="reviewsNextBtn" aria-label="Вперед">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="slider-container" id="reviewsSliderContainer">
+                    <div class="slider-track">
+                        <!-- Review 1 -->
+                        <div class="glass-panel review-card">
+                            <div>
+                                <div class="review-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Екатерина Смирнова">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Екатерина Смирнова</h4>
+                                        <p>Тур на Бали</p>
+                                    </div>
+                                </div>
+                                <p class="review-text">
+                                    "Это было незабываемое путешествие! Все организовано на высшем уровне. Персональные рекомендации ИИ превзошли наши ожидания. Спасибо Nikitka AI за эмоции!"
+                                </p>
+                            </div>
+                            <div class="review-stars">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Review 2 -->
+                        <div class="glass-panel review-card">
+                            <div>
+                                <div class="review-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Алексей Воронин">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Алексей Воронин</h4>
+                                        <p>Тур в Швейцарию</p>
+                                    </div>
+                                </div>
+                                <p class="review-text">
+                                    "Потрясающие виды, отличные отели и продуманный маршрут. Попробовали поездку с гидом-консьержем от Nikitka AI. Обязательно поедем еще!"
+                                </p>
+                            </div>
+                            <div class="review-stars">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Review 3 -->
+                        <div class="glass-panel review-card">
+                            <div>
+                                <div class="review-author">
+                                    <div class="author-avatar">
+                                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Мария Ковальчук">
+                                    </div>
+                                    <div class="author-info">
+                                        <h4>Мария Ковальчук</h4>
+                                        <p>Тур в Грецию</p>
+                                    </div>
+                                </div>
+                                <p class="review-text">
+                                    "Греция покорила наши сердца! Спасибо за идеальную организацию, теплый прием и продуманный до мелочей трансфер. Сервис 24/7 спасал в мелких вопросах!"
+                                </p>
+                            </div>
+                            <div class="review-stars">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Subscription Banner -->
+        <section class="section section-dark" style="padding-top: 50px;">
+            <div class="container">
+                <div class="newsletter-banner">
+                    <div class="newsletter-content">
+                        <h2>Получайте лучшие предложения и советы для путешествий</h2>
+                        <p>Подпишитесь на нашу еженедельную рассылку горящих туров, умных рекомендаций искусственного интеллекта и новостей туризма.</p>
+                    </div>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Ваш e-mail" required aria-label="Ваш e-mail">
+                        <button type="submit" class="btn btn-primary">
+                            Подписаться
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">N</div>
+                        <div class="logo-text">
+                            Nikitka AI
+                            <span>Travel</span>
+                        </div>
+                    </a>
+                    <p>Мы создаем путешествия, которые вдохновляют. Откройте мир вместе с нами!</p>
+                    <div class="footer-socials">
+                        <a href="https://instagram.com" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://vk.com" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="VK">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.46 11.53c-.34.62-.97 1.25-1.89 1.89-.92.64-1.89.96-2.91.96-1.52 0-2.86-.48-4.02-1.44C6.48 13.98 5.67 12.7 5.2 11.1c-.24-.76-.36-1.5-.36-2.22 0-1.12.33-2.01.99-2.67.66-.66 1.55-.99 2.67-.99.72 0 1.36.16 1.92.48.56.32.96.79 1.2 1.41.24-.62.64-1.09 1.2-1.41.56-.32 1.2-.48 1.92-.48 1.12 0 2.01.33 2.67.99.66.66.99 1.55.99 2.67 0 .72-.12 1.46-.36 2.22-.47 1.6-1.28 2.88-2.43 3.84-1.15.96-2.49 1.44-4.01 1.44-1.02 0-1.99-.32-2.91-.96-.92-.64-1.55-1.27-1.89-1.89z"></path></svg>
+                        </a>
+                        <a href="https://telegram.org" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </a>
+                        <a href="https://youtube.com" class="social-icon" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">О нас</a></li>
+                        <li><a href="services.html">Услуги</a></li>
+                        <li><a href="blog.html">Блог</a></li>
+                        <li><a href="contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Помощь</h4>
+                    <ul class="footer-links">
+                        <li><a href="contacts.html">Вопросы и ответы</a></li>
+                        <li><a href="contacts.html">Условия бронирования</a></li>
+                        <li><a href="services.html">Страхование</a></li>
+                        <li><a href="contacts.html">Поддержка</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Направления</h4>
+                    <ul class="footer-links">
+                        <li><a href="tours.html?destination=bali">Азия</a></li>
+                        <li><a href="tours.html?destination=swiss">Европа</a></li>
+                        <li><a href="tours.html?destination=dubai">Ближний Восток</a></li>
+                        <li><a href="tours.html?destination=maldives">Острова</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <div class="footer-contact-info">
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <a href="mailto:info@nikitka.ai">info@nikitka.ai</a>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Москва, Россия</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Nikitka AI Travel. Все права защищены.</p>
+                <div class="footer-bottom-links">
+                    <a href="contacts.html">Политика конфиденциальности</a>
+                    <a href="contacts.html">Пользовательское соглашение</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle" aria-hidden="true">
+        <div class="glass-panel-dark modal-content video-modal-content">
+            <div class="modal-header video-modal-header">
+                <h3 id="videoModalTitle">Маршрутное превью Nikitka AI</h3>
+                <button class="modal-close" id="videoModalClose" type="button" aria-label="Закрыть превью">✕</button>
+            </div>
+            <div class="video-preview-card" id="travelVideoPreview">
+                <div class="video-preview-copy">
+                    <span class="section-subtitle">Демо-превью</span>
+                    <h4>Бали, Альпы, Дубай и Япония в одном сценарии</h4>
+                    <p>Без внешнего видеоплеера: сайт показывает маршрут, карту, 3D-глобус и заявку прямо в интерфейсе портфолио.</p>
+                </div>
+                <div class="video-preview-points" aria-label="Что входит в превью">
+                    <span>3D-глобус</span>
+                    <span>OSM-карта</span>
+                    <span>AI-подбор</span>
+                    <span>Заявка</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/site-upgrades.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="js/route-atlas.js"></script>
+</body>
+</html>
