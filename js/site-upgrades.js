@@ -724,7 +724,7 @@
 
         panel.innerHTML = `
             <div class="catalog-ai-copy">
-                <span class="section-subtitle">AI-free подбор</span>
+                <span class="section-subtitle">Локальный подбор</span>
                 <h3>Выберите тур по сценарию поездки</h3>
                 <p>Подбор работает локально в браузере: без платных API, ключей и передачи данных наружу.</p>
             </div>

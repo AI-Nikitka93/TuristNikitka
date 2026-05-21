@@ -117,6 +117,24 @@
     color: var(--color-accent-gold);
 }
 
+@media (max-width: 600px) {
+    .btn-video {
+        min-height: 54px;
+        padding: 8px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: var(--radius-full);
+        background: rgba(7, 11, 19, 0.36);
+        backdrop-filter: blur(10px);
+        white-space: nowrap;
+    }
+
+    .btn-video .play-icon {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+    }
+}
+
 /* ==========================================================================
    2. GLASSMORPHISM PANELS & CARDS
    ========================================================================== */
@@ -143,6 +161,7 @@
     padding: 30px;
     max-width: 460px;
     width: 100%;
+    min-width: 0;
 }
 
 .widget-tabs {
@@ -150,6 +169,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     margin-bottom: 24px;
     gap: 20px;
+    min-width: 0;
 }
 
 .widget-tab {
@@ -166,6 +186,7 @@
     gap: 8px;
     font-size: 0.95rem;
     transition: color var(--transition-fast);
+    white-space: nowrap;
 }
 
 .widget-tab svg {
@@ -179,6 +200,30 @@
 
 .widget-tab.active {
     color: var(--color-accent-gold);
+}
+
+@media (max-width: 600px) {
+    .search-widget {
+        max-width: 100%;
+        padding: 24px 18px;
+    }
+
+    .widget-tabs {
+        gap: 16px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+    }
+
+    .widget-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .widget-tab {
+        flex: 0 0 auto;
+        font-size: 0.9rem;
+    }
 }
 
 .widget-tab.active::after {
@@ -705,6 +750,7 @@
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-accent-gold);
+    white-space: nowrap;
 }
 
 .offer-old-price {
@@ -720,6 +766,29 @@
 
 .offer-card:hover img {
     transform: scale(1.05);
+}
+
+#toursGrid .offer-card {
+    min-height: 420px;
+}
+
+#toursGrid .offer-content {
+    padding: 28px;
+}
+
+#toursGrid .offer-price-row {
+    gap: 14px;
+}
+
+#toursGrid .offer-price {
+    font-size: 1.12rem;
+    line-height: 1.05;
+}
+
+#toursGrid .book-btn {
+    flex: 0 0 auto;
+    min-width: 138px;
+    padding: 10px 15px !important;
 }
 
 /* Horizontal Offer Card Stack (Right Side) */
@@ -1612,18 +1681,26 @@ body.modal-open .ai-chat-window {
         border-radius: 0;
     }
     .ai-chat-badge {
-        bottom: 15px;
-        right: 15px;
-        width: 54px;
-        height: 50px;
+        top: 30px;
+        bottom: auto;
+        right: 64px;
+        width: 42px;
+        height: 42px;
         padding: 0;
         justify-content: center;
+        transform-origin: right top;
     }
 
     .ai-chat-badge:hover {
-        width: 54px;
+        width: 42px;
         padding: 0;
         justify-content: center;
+        transform: none;
+    }
+
+    .ai-chat-badge-icon {
+        width: 30px;
+        height: 30px;
     }
 
     .ai-chat-badge-text {
@@ -1681,7 +1758,8 @@ body.modal-open .ai-chat-window {
         linear-gradient(180deg, #061018 0%, #050910 28%, #070b13 100%);
     margin-top: -1px;
     padding-top: clamp(72px, 7vw, 104px);
-    padding-bottom: 86px;
+    padding-bottom: clamp(50px, 5vw, 72px);
+    scroll-margin-top: 48px;
 }
 
 .route-lab-grid {
@@ -2393,13 +2471,18 @@ body.modal-open .ai-chat-window {
    ========================================================================== */
 .route-atlas-section {
     position: relative;
-    min-height: 780px;
-    padding: 120px 0;
+    min-height: auto;
+    padding: clamp(64px, 6vw, 82px) 0 clamp(24px, 3vw, 38px);
     overflow: hidden;
     background:
         radial-gradient(circle at 72% 38%, rgba(0, 242, 254, 0.07), transparent 28rem),
         radial-gradient(circle at 18% 22%, rgba(242, 169, 59, 0.06), transparent 28rem),
         linear-gradient(180deg, #070b13 0%, rgba(4, 8, 15, 0.98) 16%, rgba(8, 15, 27, 0.96) 52%, #050910 100%);
+    scroll-margin-top: 48px;
+}
+
+.route-atlas-section + .section-dark {
+    padding-top: clamp(46px, 5vw, 64px);
 }
 
 .route-globe-canvas {
@@ -2431,7 +2514,7 @@ body.modal-open .ai-chat-window {
 .route-atlas-inner {
     position: relative;
     z-index: 2;
-    min-height: 540px;
+    min-height: 0;
     display: grid;
     grid-template-columns: minmax(320px, 0.82fr) minmax(460px, 0.9fr);
     align-items: center;
@@ -2758,6 +2841,10 @@ body.modal-open .ai-chat-window {
         padding: 20px;
     }
 
+    .route-lab-section {
+        padding-bottom: 48px;
+    }
+
     .hero-feature-bridge {
         margin-top: -54px;
         padding-bottom: 42px;
@@ -2818,7 +2905,8 @@ body.modal-open .ai-chat-window {
 
     .route-atlas-section {
         min-height: auto;
-        padding: 82px 0;
+        padding: 44px 0 52px;
+        scroll-margin-top: 48px;
     }
 
     .route-atlas-inner {
