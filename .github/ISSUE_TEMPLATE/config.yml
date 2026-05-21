@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security policy
+    url: https://github.com/AI-Nikitka93/TuristNikitka/blob/main/SECURITY.md
+    about: Do not report vulnerabilities or leaked secrets in public issues.
+  - name: Live demo
+    url: https://turist-nikitka.vercel.app
+    about: Open the deployed portfolio site.
+  - name: AI setup
+    url: https://github.com/AI-Nikitka93/TuristNikitka/blob/main/AI_SETUP.md
+    about: Read provider-key setup notes for the optional AI endpoint.

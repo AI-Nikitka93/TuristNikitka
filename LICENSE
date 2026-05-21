@@ -1,0 +1,44 @@
+Nikitka AI Travel Portfolio License
+
+Copyright (c) 2026 AI_Nikitka93 / Nikitka AI Travel.
+All rights reserved.
+
+This repository is published publicly for portfolio review, evaluation, and
+demonstration only.
+
+You may:
+
+- view the source code and documentation in this repository;
+- run the project locally for personal evaluation of the portfolio work;
+- reference the public live demo when discussing the author's portfolio.
+
+You may not, without prior written permission from the copyright holder:
+
+- copy, redistribute, sublicense, sell, or republish this project or substantial
+  parts of it;
+- use this repository as a website template, starter, boilerplate, or commercial
+  project base;
+- host a copied or modified version as another travel agency, booking site,
+  marketplace, SaaS product, or portfolio project;
+- remove or replace the original branding in order to present the project as
+  your own work;
+- create derivative works for public distribution or commercial use.
+
+This license does not grant trademark rights, brand rights, or rights to the
+project's visual identity, text, layout, route concepts, screenshots, or demo
+presentation.
+
+Third-party assets, services, libraries, map data, fonts, and imagery remain
+under their own licenses and terms. This includes, but is not limited to,
+Leaflet, Three.js, OpenStreetMap data, NASA Blue Marble imagery, Unsplash or
+remote image sources, Vercel, OpenRouter, Groq, and xAI. Their inclusion in this
+repository or demo does not transfer ownership or grant additional rights.
+
+The demo content is fictional. Prices, addresses, contacts, routes, agency
+details, and booking flows are provided only for portfolio presentation.
+
+THE PROJECT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT
+HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF
+THE PROJECT.

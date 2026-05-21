@@ -1,5 +1,11 @@
 # История проекта
 
+### 2026-05-21 22:56:45 +03:00 — GitHub portfolio packaging
+- Changed: оформлен публичный GitHub surface как portfolio-only showcase: README.md, README.ru.md, restrictive LICENSE, community/trust files, issue/PR templates, CODEOWNERS, changelog, architecture docs, packaging audit и README screenshot.
+- Files: `README.md`, `README.ru.md`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`, `CODE_OF_CONDUCT.md`, `CHANGELOG.md`, `docs/architecture.md`, `docs/GITHUB_PACKAGING_AUDIT.md`, `docs/assets/github-home-preview.png`, `.github/ISSUE_TEMPLATE/bug_report.yml`, `.github/ISSUE_TEMPLATE/config.yml`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/CODEOWNERS`, `PROJECT_HISTORY.md`.
+- Verification: Playwright screenshot captured from local static server at `127.0.0.1:4173` with `1440x950` viewport; `node --check` passed for `js/main.js`, `js/site-upgrades.js`, `js/route-atlas.js`, `api/ai-chat.js`; issue-template YAML parsed successfully; `vercel build --prod` passed.
+- Status: DONE.
+
 ## 2026-05-21
 
 Проект: `Nikitka AI Travel`

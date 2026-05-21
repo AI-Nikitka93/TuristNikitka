@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a visible bug in the portfolio demo
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve the portfolio demo. Do not include secrets, API keys, or private security details here.
+  - type: input
+    id: page
+    attributes:
+      label: Page or URL
+      description: Which page or route has the issue?
+      placeholder: https://turist-nikitka.vercel.app/
+    validations:
+      required: true
+  - type: dropdown
+    id: viewport
+    attributes:
+      label: Viewport
+      options:
+        - Desktop
+        - Tablet
+        - Mobile
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the visible issue and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshot or notes
+      description: Add screenshots only if they do not expose private data.
+    validations:
+      required: false
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Scope confirmation
+      options:
+        - label: I understand this is a fictional portfolio demo, not a real travel booking service.
+          required: true
+        - label: I did not include API keys, tokens, passwords, or private vulnerability details.
+          required: true
